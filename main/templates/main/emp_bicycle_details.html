@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Szczegóły roweru{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Informacje o rowerze</b></h1>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Nazwa</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.name %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.name }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Typ</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.type %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.type }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Opis</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.desc %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.desc }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Cena</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.cost %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.cost }} PLN za godzinę
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <hr>
+        <a class="btn btn-primary" href="/pracownik/rowery/{{ bicycle.id }}/edycja" role="button">Edytuj dane</a>
+        <a class="btn btn-danger" href="/pracownik/rowery/{{ bicycle.id }}/usun"
+           onclick="return confirm('Czy na pewno chcesz usunąć model?');" role="button">Usuń rower</a>
+    </div>
+    <hr>
+    <div>
+        <p><b>Dostępne opcje</b></p>
+        <table class="table table-hover" style="width: 15%">
+            <colgroup>
+                <col style="width: 75%">
+                <col style="width: 25%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td>Informacje</td>
+                    <td>Akcje</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bicycle_items %}
+                    <tr>
+                        <td style="vertical-align: middle">{{ item.info }}</td>
+                        <td><a class="btn btn-danger" href="/pracownik/rowery/{{ item.id }}/usun2"
+                        onclick="return confirm('Czy na pewno chcesz usunąć rower?')" role="button">usuń</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

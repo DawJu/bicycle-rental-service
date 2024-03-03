@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Logowanie{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Logowanie</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_username" class="form-group">
+            <label for="id_username" class="requiredField form-label">Nazwa Użytkownika</label>
+            <input type="text" name="username" autofocus class="form-control" required id="id_username">
+        </div>
+        <br>
+        <div id="div_id_password" class="form-group">
+            <label for="id_password" class="requiredField form-label">Hasło</label>
+            <input type="password" name="password" class="form-control" required id="id_password">
+        </div>
+        <p>Nie masz konta? Kliknij <a href="/rejestracja">tutaj</a>, by je stworzyć</p>
+        <button type="submit" class="btn btn-success">Zaloguj się</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

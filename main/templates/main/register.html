@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Rejestracja{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Rejestracja</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_username" class="form-group">
+            <label for="id_username" class="requiredField form-label">Nazwa użytkownika</label>
+            <input type="text" name="username" autofocus class="form-control" required id="id_username">
+        </div>
+        <br>
+        <div id="div_id_email" class="form-group">
+            <label for="id_email" class="requiredField form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" required id="id_email"
+                   aria-describedby="emailHelp">
+        </div>
+        <br>
+        <div id="div_id_password1" class="form-group">
+            <label for="id_password1" class="requiredField form-label">Hasło</label>
+            <input type="password" name="password1" class="form-control" required id="id_password1">
+        </div>
+        <br>
+        <div id="div_id_password2" class="form-group">
+            <label for="id_password2" class="requiredField form-label">Potwierdź hasło</label>
+            <input type="password" name="password2" class="form-control" required id="id_password2">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Zarejestruj</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

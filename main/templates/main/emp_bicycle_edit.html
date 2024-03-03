@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Edycja roweru{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Edytuj dane</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_name" class="form-group">
+            <label for="id_name" class="form-label">Nazwa</label>
+            <input type="text" name="name" placeholder="{{ bicycle.name }}" autofocus class="form-control" id="id_name">
+        </div>
+        <br>
+        <div id="div_id_type" class="form-group">
+            <label for="id_type" class="form-label">Typ</label>
+            <select name="type" class="form-control" id="id_type">
+                {% for type in types %}
+                    <option value="{{ type }}">{{ type }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div id="div_id_desc" class="form-group">
+            <label for="id_desc" class="form-label">Opis</label>
+            <input type="text" name="desc" placeholder="{{ bicycle.desc }}" class="form-control" id="id_desc">
+        </div>
+        <br>
+        <div id="div_id_cost" class="form-group">
+            <label for="id_cost" class="form-label">Cena</label>
+            <input type="number" step="0.01" name="cost" placeholder="{{ bicycle.cost }}" class="form-control" id="id_cost">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Zapisz</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

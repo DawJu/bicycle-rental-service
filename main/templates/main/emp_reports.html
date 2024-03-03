@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+
+{% block extra_style %}
+    <style>
+        .reports a:link, .reports a:visited, .reports a:hover, .reports a:active {
+            text-decoration: none;
+            color: black;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}Zgłoszenia{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Lista zgłoszeń</b></h1>
+    </div>
+    <br>
+    <div id="reports" class="reports">
+        <table class="table table-hover" id="sortTable">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Wypożyczenie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                    <tr>
+                        <td><a href="/pracownik/zgloszenia/{{ report.id }}"><b>{{ report.id }}</b></a></td>
+                        <td>{{ report.date }}</td>
+                        <td>{{ report.rental }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $('#sortTable').DataTable( {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.4/i18n/pl.json'
+            }
+        } );
+    </script>
+{% endblock %}

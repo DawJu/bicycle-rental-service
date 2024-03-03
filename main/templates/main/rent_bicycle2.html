@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Wypożycz rower{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Wypożycz rower</b></h1>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-1">
+            <label><b>Model</b></label>
+        </div>
+        <div class="col-md-6">
+            <p>{{ bicycle }} (Typ: {{ bicycle.type }})</p>
+        </div>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_bicycle_item" class="form-group">
+            <label for="id_bicycle_item" class="requiredField form-label">Rower</label>
+            <select name="bicycle_item" class="form-control" required id="id_bicycle_item">
+                {% for item in bicycle_items %}
+                    <option value="{{ item.info }}">{{ item.info }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div id="div_id_start_time" class="form-group">
+            <label for="id_start_time" class="requiredField form-label">Początek wypożyczenia</label>
+            <input type="datetime-local" name="start_time" class="form-control" required id="id_start_time">
+        </div>
+        <br>
+        <div id="div_id_end_time" class="form-group">
+            <label for="id_end_time" class="requiredField form-label">Koniec wypożyczenia</label>
+            <input type="datetime-local" name="end_time" class="form-control" required id="id_end_time">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Potwierdź</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

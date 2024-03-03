@@ -1,0 +1,140 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Profil użytkownika{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Profil</b></h1>
+    </div>
+    <br>
+    <div class="container emp-profile">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="profile-head">
+                        <h5>{{ user.username }}</h5>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" href="/profil/edycja" role="button">Edytuj profil</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="myTabContent">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Imię</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not user.first_name %}
+                                        Nie podano
+                                    {% else %}
+                                        {{ user.first_name }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Nazwisko</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not user.last_name %}
+                                        Nie podano
+                                    {% else %}
+                                        {{ user.last_name }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Adres e-mail</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p><b>Aktywne wypożyczenia</b></p>
+            <div id="active_rentals">
+                <table class="table table-hover display">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rower</th>
+                            <th scope="col">Początek wypożyczenia</th>
+                            <th scope="col">Koniec wypożyczenia</th>
+                            <th scope="col">Liczba godzin</th>
+                            <th scope="col">Koszt [PLN]</th>
+                            <th scope="col">Akcja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in active_rentals %}
+                            <tr>
+                                <td>{{ rental.item }}</td>
+                                <td>{{ rental.start_time }}</td>
+                                <td>{{ rental.end_time }}</td>
+                                <td align="center">{{ rental.num_hours }}</td>
+                                <td align="center">{{ rental.total_cost }}</td>
+                                {% now 'Y-m-d H:i' as now %}
+                                {% if rental.start_time|date:'Y-m-d H:i' < now %}
+                                    <td><a class="btn btn-warning" href="/zgloszenie/{{ rental.id }}"
+                                           role="button">Zgłoś</a></td>
+                                {% else %}
+                                    <td><a class="btn btn-danger" href="/anuluj/{{ rental.id }}"
+                                           onclick="return confirm('Czy na pewno chcesz anulować wypożyczenie?');"
+                                           role="button">Anuluj</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <p><b>Historia wypożyczeń</b></p>
+            <div id="past_rentals">
+                <table class="table table-hover display">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rower</th>
+                            <th scope="col">Początek wypożyczenia</th>
+                            <th scope="col">Koniec wypożyczenia</th>
+                            <th scope="col">Liczba godzin</th>
+                            <th scope="col">Koszt [PLN]</th>
+                            <th scope="col">Akcja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental in past_rentals %}
+                            <tr>
+                                <td>{{ rental.item }}</td>
+                                <td>{{ rental.start_time }}</td>
+                                <td>{{ rental.end_time }}</td>
+                                <td align="center">{{ rental.num_hours }}</td>
+                                <td align="center">{{ rental.total_cost }}</td>
+                                <td><a class="btn btn-warning" href="/zgloszenie/{{ rental.id }}" role="button">Zgłoś</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $('table.display').DataTable( {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.4/i18n/pl.json'
+            }
+        } );
+    </script>
+{% endblock %}

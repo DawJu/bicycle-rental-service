@@ -1,0 +1,41 @@
+from django.urls import path
+from . import views, views2
+
+urlpatterns = [
+    # API View
+    path('api', views2.RootApi.as_view(), name=views2.RootApi.name),
+    path('api/bicycles', views2.BicycleList.as_view(), name=views2.BicycleList.name),
+    path('api/bicycles/<int:pk>', views2.BicycleDetail.as_view(), name=views2.BicycleDetail.name),
+    path('api/bicycles-items', views2.BicycleItemList.as_view(), name=views2.BicycleItemList.name),
+    path('api/bicycles-items/<int:pk>', views2.BicycleItemDetail.as_view(), name=views2.BicycleItemDetail.name),
+    path('api/rentals', views2.RentalList.as_view(), name=views2.RentalList.name),
+    path('api/rentals/<int:pk>', views2.RentalDetail.as_view(), name=views2.RentalDetail.name),
+    path('api/reports', views2.ReportList.as_view(), name=views2.ReportList.name),
+    path('api/reports/<int:pk>', views2.ReportDetail.as_view(), name=views2.ReportDetail.name),
+    path('api/users', views2.UserList.as_view(), name=views2.UserList.name),
+    path('api/users/<int:pk>', views2.UserDetail.as_view(), name=views2.UserDetail.name),
+    # HTML View
+    path('', views.home, name='home'),
+    path('rejestracja', views.register, name='register'),
+    path('logowanie', views.login, name='log_in'),
+    path('profil', views.profile, name='profile'),
+    path('profil/edycja', views.edit_profile, name='edit_profile'),
+    path('rowery', views.bicycle_list, name='bicycle_list'),
+    path('rowery/<int:id>', views.bicycle_details, name='bicycle_details'),
+    path('wypozycz', views.rent_bicycle, name='rent_bicycle'),
+    path('wypozycz/<int:id>', views.rent_bicycle2, name='rent_bicycle2'),
+    path('zgloszenie', views.add_report, name='add_report'),
+    path('zgloszenie/<int:id>', views.add_report2, name='add_report2'),
+    path('anuluj/<int:id>', views.cancel_rental, name='cancel_rental'),
+    path('pracownik/rowery', views.manage_bicycles, name='manage_bicycles'),
+    path('pracownik/rowery/<int:id>', views.manage_bicycle_details, name='manage_bicycle_details'),
+    path('pracownik/rowery/<int:id>/edycja', views.edit_bicycle_details, name='edit_bicycle_details'),
+    path('pracownik/rowery/<int:id>/usun', views.delete_bicycle, name='delete_bicycle'),
+    path('pracownik/rowery/<int:id>/usun2', views.delete_bicycle2, name='delete_bicycle2'),
+    path('pracownik/rowery/dodaj', views.create_bicycle, name='create_bicycle'),
+    path('pracownik/rowery/dodaj2', views.create_bicycle2, name='create_bicycle2'),
+    path('pracownik/wypozyczenia', views.manage_rentals, name='manage_rentals'),
+    path('pracownik/wypozyczenia/<int:id>', views.rental_details, name='rental_details'),
+    path('pracownik/zgloszenia', views.manage_reports, name='manage_reports'),
+    path('pracownik/zgloszenia/<int:id>', views.report_details, name='report_details'),
+]

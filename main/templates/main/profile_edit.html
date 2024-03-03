@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Edycja profilu{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Edytuj profil</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_username" class="form-group">
+            <label for="id_username" class="form-label">Nazwa Użytkownika</label>
+            <input type="text" name="username" placeholder="{{ user.username }}" autofocus
+                   class="form-control" id="id_username">
+        </div>
+        <br>
+        <div id="div_id_first_name" class="form-group">
+            <label for="id_first_name" class="form-label">Imię</label>
+            <input type="text" name="first_name" placeholder="{{ user.first_name }}" autocapitalize="words"
+                   class="form-control" id="id_first_name">
+        </div>
+        <br>
+        <div id="div_id_last_name" class="form-group">
+            <label for="id_last_name" class="form-label">Nazwisko</label>
+            <input type="text" name="last_name" placeholder="{{ user.last_name }}" autocapitalize="words"
+                   class="form-control" id="id_last_name">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Zapisz</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

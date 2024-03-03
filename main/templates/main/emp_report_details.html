@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+
+{% block extra_style %}
+    <style>
+        .container a:link, .container a:visited, .container a:hover, .container a:active {
+            text-decoration: none;
+            color: black;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}Szczegóły zgłoszenia{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Szczegóły zgłoszenia</b></h1>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <label><b>ID</b></label>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    {% if not report.id %}
+                        Brak danych
+                    {% else %}
+                        {{ report.id }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label><b>Data</b></label>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    {% if not report.date %}
+                        Brak danych
+                    {% else %}
+                        {{ report.date }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label><b>Wypożyczenie</b></label>
+            </div>
+            <div class="col-md-6">
+                <p>
+                    {% if not report.rental %}
+                        Brak danych
+                    {% else %}
+                        <a href="/pracownik/wypozyczenia/{{ report.rental.id }}">{{ report.rental }}</a>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <p><b>Treść:</b></p>
+    <p>{{ report.text }}</p>
+{% endblock %}

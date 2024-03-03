@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Nowy rower{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Wprowadź dane</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        <div id="div_id_bicycle" class="form-group">
+            <label for="id_bicycle" class="form-label">Model</label>
+            <select name="bicycle" class="form-control" id="id_bicycle">
+                {% for bicycle in bicycles %}
+                    <option value="{{ bicycle }}">{{ bicycle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <div id="div_id_info" class="form-group">
+            <label for="id_info" class="form-label">Informacje</label>
+            <input type="text" name="info" class="form-control" required id="id_info">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Zapisz</button>
+    </form>
+
+    <div>
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

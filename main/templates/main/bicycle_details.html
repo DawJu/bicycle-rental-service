@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Szczegóły roweru{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Informacje o rowerze</b></h1>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Nazwa</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.name %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.name }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Typ</b></label>
+            </div>
+            <div class="col">
+                <p>
+                    {% if not bicycle.type %}
+                        Brak danych
+                    {% else %}
+                        {{ bicycle.type }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-2">
+                <label><b>Opis</b></label>
+            </div>
+            <div class="col">
+                <p>{{ bicycle.desc }}</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <p><b>Dostępne opcje</b></p>
+        <table>
+            <tbody>
+                {% for item in bicycle_items %}
+                    <tr><td>{{ item.info }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

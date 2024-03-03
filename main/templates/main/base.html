@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+
+    <style>
+        body, h1, h2, h3, h4, h5 {
+            font-family: "Poppins", sans-serif
+        }
+
+        body {
+            font-size:16px;
+        }
+
+        .w3-half img {
+            margin-bottom:-6px;
+            margin-top:16px;
+            opacity:0.8;
+            cursor:pointer
+        }
+
+        .w3-half img:hover {
+            opacity:1
+        }
+
+        .logo {
+            padding: 0 5% 0 5%;
+            text-align: center;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    {% block extra_style %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <!-- Pasek boczny / menu -->
+    <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding"
+         style="z-index: 3; width: 300px; font-weight: bold;" id="mySidebar">
+        <br>
+        <a href="javascript: void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
+           style="width: 100%; font-size: 22px">Zamknij Menu</a>
+        <div class="w3-container">
+            <h3 class="w3-padding-64">
+                <div class="logo">
+                    <a href="/"><img src="{% static 'images/logo.png' %}"
+                                 alt="logo" width="100%" height="20%"></a>
+                </div>
+            </h3>
+        </div>
+        <div class="w3-bar-block">
+            <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Główna</a>
+            {% if not is_employee %}
+                <a href="/rowery" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Rowery</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                    <a href="/admin" target="_blank" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Panel Admina</a>
+                    <a href="/api" target="_blank" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Widok API</a>
+                {% elif not is_employee %}
+                    <a href="/wypozycz" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Wypożycz rower</a>
+                    <a href="/zgloszenie" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Zgłoś usterkę</a>
+                    <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Profil</a>
+                {% else %}
+                    <a href="/pracownik/rowery" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Rowery</a>
+                    <a href="/pracownik/wypozyczenia" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Wypożyczenia</a>
+                    <a href="/pracownik/zgloszenia" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Zgłoszenia</a>
+                {% endif %}
+                <a href="/logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Wyloguj z konta {{ user.username }}</a>
+            {% else %}
+                <a href="/rejestracja" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Rejestracja</a>
+                <a href="/logowanie" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">
+                        Logowanie</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Górne menu na małym ekranie -->
+    <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+        <a href="javascript: void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+        <span>eBike</span>
+    </header>
+
+    <!-- Efekt nakładki przy otwieraniu paska bocznego na małym ekranie -->
+    <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor: pointer" title="close side menu"
+         id="myOverlay"></div>
+
+    <div id="content" class="w3-main" style="margin-left: 340px; margin-right: 40px">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // Skrypt do otwierania i zamykania paska bocznego
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("myOverlay").style.display = "block";
+        }
+
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("myOverlay").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>

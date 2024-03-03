@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Zgłoś problem{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Zgłoś problem z rowerem</b></h1>
+    </div>
+    <br>
+    <form method="POST" class="form-group" onsubmit="alert('Zgłoszenie zostało przesłane.')">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-1">
+                <label><b>Zgłoszenie</b></label>
+            </div>
+            <div class="col-md-6">
+                <p>{{ rental.item }}, {{ rental.start_time }} - {{ rental.end_time }}</p>
+            </div>
+        </div>
+        <br>
+        <div id="div_id_report" class="form-group">
+            <label for="id_report" class="requiredField form-label">Treść zgłoszenia</label>
+            <input type="text" name="report" autofocus class="form-control" required id="id_report">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Zapisz</button>
+    </form>
+{% endblock %}

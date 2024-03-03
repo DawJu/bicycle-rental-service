@@ -1,0 +1,276 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Szczegóły wypożyczenia{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Szczegóły wypożyczenia</b></h1>
+    </div>
+    <br>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <p style="font-size: 24px"><b>Wypożyczenie</b></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="myTabContent">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>ID</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.id %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.id }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Rower</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Początek wypożyczenia</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.start_time %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.start_time }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Koniec wypożyczenia</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.end_time %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.end_time }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Liczba godzin</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.num_hours %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.num_hours }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Łączny koszt</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.total_cost %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.total_cost }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Użytkownik</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.client }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p style="font-size: 24px"><b>Rower</b></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="myTabContent">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>ID</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item.id %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item.id }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Nazwa</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Typ</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item.bicycle.type %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item.bicycle.type }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Cena za godzinę [PLN]</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item.bicycle.cost %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item.bicycle.cost }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Opis</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.item.bicycle.desc %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.item.bicycle.desc }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p style="font-size: 24px"><b>Użytkownik</b></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="myTabContent">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>ID</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client.id %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.client.id }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Nazwa użytkownika</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client.username %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.client.username }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Adres email</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client.email %}
+                                        Brak danych
+                                    {% else %}
+                                        {{ rental.client.email }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Imię</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client.first_name %}
+                                        Nie podano
+                                    {% else %}
+                                        {{ rental.client.first_name }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><b>Nazwisko</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>
+                                    {% if not rental.client.last_name %}
+                                        Nie podano
+                                    {% else %}
+                                        {{ rental.client.last_name }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

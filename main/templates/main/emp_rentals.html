@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+
+{% block extra_style %}
+    <style>
+        .rentals a:link, .rentals a:visited, .rentals a:hover, .rentals a:active {
+            text-decoration: none;
+            color: black;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}Wypożyczenia{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Lista wypożyczeń</b></h1>
+    </div>
+    <br>
+    <p><b>Aktywne wypożyczenia</b></p>
+    <div class="rentals">
+        <div id="active_rentals">
+            <table class="table table-hover display">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Rower</th>
+                        <th scope="col">Początek wypożyczenia</th>
+                        <th scope="col">Koniec wypożyczenia</th>
+                        <th scope="col">Użytkownik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rental in active_rentals %}
+                        <tr>
+                            <td><a href="/pracownik/wypozyczenia/{{ rental.id }}"><b>{{ rental.id }}</b></a></td>
+                            <td>{{ rental.item }}</td>
+                            <td>{{ rental.start_time }}</td>
+                            <td>{{ rental.end_time }}</td>
+                            <td>{{ rental.client.username }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <p><b>Historia wypożyczeń</b></p>
+        <div id="past_rentals">
+            <table class="table table-hover display">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Rower</th>
+                        <th scope="col">Początek wypożyczenia</th>
+                        <th scope="col">Koniec wypożyczenia</th>
+                        <th scope="col">Użytkownik</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rental in past_rentals %}
+                        <tr>
+                            <td><a href="/pracownik/wypozyczenia/{{ rental.id }}"><b>{{ rental.id }}</b></a></td>
+                            <td>{{ rental.item }}</td>
+                            <td>{{ rental.start_time }}</td>
+                            <td>{{ rental.end_time }}</td>
+                            <td>{{ rental.client.username }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $('table.display').DataTable( {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.4/i18n/pl.json'
+            }
+        } );
+    </script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block extra_style %}
+    <style>
+        .bicycles a:link, .bicycles a:visited, .bicycles a:hover, .bicycles a:active {
+            text-decoration: none;
+            color: black;
+    }
+    </style>
+{% endblock %}
+
+{% block title %}Lista rowerów{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Rowery dostępne w wypożyczalni</b></h1>
+    </div>
+    <br>
+    <div id="log in">
+        {% if not user.is_authenticated %}
+            <h3>Aby wypożyczyć rower, należy się <a href="/logowanie">zalogować</a>.</h3>
+            <br>
+        {% endif %}
+    </div>
+    <div id="bicycles" class="bicycles">
+        <table class="table table-hover" id="sortTable">
+            <thead>
+                <tr>
+                    <th scope="col">Nazwa</th>
+                    <th scope="col">Typ</th>
+                    <th scope="col">Cena za godzinę [PLN]</th>
+                    {% if user.is_authenticated and not user.is_superuser %}
+                        <th scope="col">Wypożycz</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for bicycle in bicycles %}
+                    <tr>
+                        <td><a href="/rowery/{{ bicycle.id }}"><b>{{ bicycle.name }}</b></a></td>
+                        <td>{{ bicycle.type }}</td>
+                        <td>{{ bicycle.cost }}</td>
+                        {% if user.is_authenticated and not user.is_superuser %}
+                            <td><a class="btn btn-primary" href="/wypozycz/{{ bicycle.id }}" role="button">Wybierz</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $('#sortTable').DataTable( {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.4/i18n/pl.json'
+            },
+            "pageLength": 25
+        } );
+    </script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Wypożyczalnia eBike{% endblock %}
+
+{% block content %}
+    <div class="w3-container" style="margin-top: 80px" id="heading">
+        <h1 class="w3-jumbo"><b>Strona główna</b></h1>
+    </div>
+    {% if not user.is_authenticated %}
+        <h3>Aby w pełni korzystać z serwisu, należy się <a href="/logowanie">zalogować</a>.</h3>
+    {% else %}
+        <h3>Zapraszamy do korzystania z serwisu.</h3>
+    {% endif %}
+{% endblock %}
